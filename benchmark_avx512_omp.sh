@@ -7,12 +7,11 @@
 #SBATCH -o log_avx512_omp_%j.out
 #SBATCH --exclusive
 
-source /home/liuchang/competition/Iris/HemePure/env.sh
+source ./env.sh
 
-BASE=/home/liuchang/competition/Iris/HemePure
-EXE=$BASE/src/build_AVX512_OMP/hemepure
-INPUT=$BASE/cases/Bifurcation-TINY/input_PP.xml
-OUT=$BASE/result/test_avx512_omp
+EXE=./src/build_AVX512_OMP/hemepure
+INPUT=./cases/Bifurcation-TINY/input_PP.xml
+OUT=./result/test_avx512_omp
 
 rm -rf $OUT
 
@@ -25,8 +24,6 @@ export OMP_PROC_BIND=close
 export OMP_PLACES=cores
 
 # 内存策略优化
-# - 启用内存池减少分配开销
-export OMP_MEMORY_ALLOC_ADJUST=0
 export KMP_AFFINITY=granularity=fine,balanced
 
 # Intel MPI 优化配置

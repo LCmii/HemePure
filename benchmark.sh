@@ -7,12 +7,11 @@
 #SBATCH -o log_%j.out
 #SBATCH --exclusive
 
-source /global/exafs/users/rdmaworkshop10/lc/HemeLB/optimized/HemePure/env.sh
+source ./env.sh
 
-BASE=/global/exafs/users/rdmaworkshop10/lc/HemeLB
-EXE=/global/exafs/users/rdmaworkshop10/lc/HemeLB/optimized/HemePure_OMP/src/build_PP_Benchmark/hemepure
-INPUT=$BASE/Bifurcation-TINY/input_PP.xml
-OUT=/global/exafs/users/rdmaworkshop10/lc/HemeLB/optimized/result/test_tiny_56p_1t
+EXE=./src/build_PP_Benchmark/hemepure
+INPUT=./cases/Bifurcation-TINY/input_PP.xml
+OUT=./result/test_tiny_56p_1t
 
 rm -rf $OUT
 
