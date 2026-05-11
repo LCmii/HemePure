@@ -43,7 +43,6 @@ namespace hemelb
 
 #if defined(HEMELB_USE_AVX512)
 						// AVX512 optimized version - process 8 doubles at once
-						const __m512d omega_vec = _mm512_set1_pd(lbmParams->GetOmega());
 						Direction numVect8 = ((LatticeType::NUMVECTORS >> 3) << 3);
 						for (Direction ii = 0; ii < numVect8; ii += 8)
 						{
@@ -58,7 +57,6 @@ namespace hemelb
 						}
 #elif defined(HEMELB_USE_AVX2)
 						// AVX2 optimized version - process 4 doubles at once
-						const __m256d omega_vec = _mm256_set1_pd(lbmParams->GetOmega());
 						Direction numVect4 = ((LatticeType::NUMVECTORS >> 2) << 2);
 						for (Direction ii = 0; ii < numVect4; ii += 4)
 						{
