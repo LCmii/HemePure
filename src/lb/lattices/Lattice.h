@@ -164,6 +164,13 @@ namespace hemelb
 
 								// f is not aligned, loadu has to be used,
 								// CXD, CYD, CZD are supposed to be 16B aligned
+
+								// Prefetch next data block to reduce memory latency
+								if (direction + 4 < numVect2)
+								{
+									_mm_prefetch(&f[direction + 4], _MM_HINT_T0);
+								}
+
 								const __m256d f_AVX2 = _mm256_loadu_pd(&f[direction]);
 								const __m256d CX_AVX2 = _mm256_loadu_pd(&DmQn::CXD[direction]);
 								const __m256d CY_AVX2 = _mm256_loadu_pd(&DmQn::CYD[direction]);
@@ -259,6 +266,13 @@ inline static double hsum_double_avx(__m256d v) {
 
 								// f is not aligned, loadu has to be used,
 								// CXD, CYD, CZD are supposed to be 16B aligned
+
+								// Prefetch next data block to reduce memory latency
+								if (direction + 8 < numVect2)
+								{
+									_mm_prefetch(&f[direction + 8], _MM_HINT_T0);
+								}
+
 								const __m512d f_AVX2 = _mm512_loadu_pd(&f[direction]);
 								const __m512d CX_AVX2 = _mm512_loadu_pd(&DmQn::CXD[direction]);
 								const __m512d CY_AVX2 = _mm512_loadu_pd(&DmQn::CYD[direction]);
@@ -582,6 +596,15 @@ inline static double hsum_double_avx512(__m512d v) {
 							Direction numVect2 = ((DmQn::NUMVECTORS >> 3) << 3);
 							for (Direction i = 0; i < numVect2; i+=8)
 							{
+								// Prefetch next data block to reduce memory latency
+								if (i + 8 < numVect2)
+								{
+									_mm_prefetch(&DmQn::CXD[i + 8], _MM_HINT_T0);
+									_mm_prefetch(&DmQn::CYD[i + 8], _MM_HINT_T0);
+									_mm_prefetch(&DmQn::CZD[i + 8], _MM_HINT_T0);
+									_mm_prefetch(&DmQn::EQMWEIGHTS[i + 8], _MM_HINT_T0);
+								}
+
 								// mom_dot_ei = DmQn::CX[i] * momentum_x + DmQn::CY[i] * momentum_y + DmQn::CZ[i] * momentum_z;
 								const __m512d CXD_momentum_x_AVX2 = _mm512_mul_pd(_mm512_loadu_pd(&DmQn::CXD[i]),momentum_x_AVX2);
 								const __m512d CYD_momentum_y_AVX2 = _mm512_mul_pd(_mm512_loadu_pd(&DmQn::CYD[i]),momentum_y_AVX2);
