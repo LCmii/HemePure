@@ -37,6 +37,7 @@ build_src() {
 
   # 开启 AVX512（一次处理8个double = 64字节）显著减少 ld/sd 指令数量
   # 开启 OpenMP 支持多线程并行
+  # 保持默认边界条件配置（与 build_PP_Benchmark 一致）
   cmake .. \
     -DCMAKE_C_COMPILER=${CC} \
     -DCMAKE_CXX_COMPILER=${CXX} \
@@ -45,9 +46,6 @@ build_src() {
     -DHEMELB_USE_SSE3=OFF \
     -DHEMELB_USE_AVX2=OFF \
     -DHEMELB_USE_AVX512=ON \
-    -DHEMELB_OUTLET_BOUNDARY=LADDIOLET \
-    -DHEMELB_WALL_OUTLET_BOUNDARY=LADDIOLETBFL \
-    -DHEMELB_USE_VELOCITY_WEIGHTS_FILE=OFF \
     -DCMAKE_CXX_FLAGS="-qopenmp -xCORE-AVX512 -O3 -fno-alias"
 
   make -j8
