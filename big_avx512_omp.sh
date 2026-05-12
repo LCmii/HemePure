@@ -10,8 +10,8 @@
 source ./env.sh
 
 EXE=./src/build_AVX512_OMP/hemepure
-INPUT=/global/exafs/users/rdmaworkshop10/lc/HemeLB/Bifurcation-TINY/input_PP.xml
-OUT=./result/test_avx512_omp
+INPUT=/global/exafs/users/rdmaworkshop10/lc/HemeLB/Aneurysm-VIRTUAL/input_PP.xml
+OUT=./result/big_avx512_omp
 
 rm -rf $OUT
 
