@@ -3,8 +3,8 @@
 #SBATCH -p iris
 #SBATCH -N 1
 #SBATCH -n 28                  # 28进程 x 2线程 = 56 线程
-#SBATCH -t 1:00:00
-#SBATCH -o log_avx512_omp_%j.out
+#SBATCH -t 4:00:00
+#SBATCH -o log_big_avx512_omp_%j.out
 #SBATCH --exclusive
 
 source ./env.sh
